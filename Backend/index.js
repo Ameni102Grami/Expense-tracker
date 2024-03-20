@@ -1,11 +1,11 @@
-import { ApolloServer } from "@apollo/server"
-import { startStandaloneServer } from "@apollo/server/standalone"
-
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import mergedResolvers from "./resolvers";
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-})
+  resolvers: mergedResolvers,
+});
 
-const { url } = await startStandaloneServer(server)
+const { url } = await startStandaloneServer(server);
 
-console.log(`🚀 Server ready at ${url}`)
+console.log(`🚀 Server ready at ${url}`);
