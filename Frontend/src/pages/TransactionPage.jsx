@@ -1,21 +1,20 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     GET_TRANSACTION,
     GET_TRANSACTION_STATISTICS,
 } from "../graphql/queries/transaction.query";
-import { UPDATE_TRANSACTION } from "../graphql/mutations/transcation.mutation";
+import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
-import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkeleton";
+import TransactionFormSkeleton from "../components/skeletons/sectionFormSkeleton";
 
 const TransactionPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { loading, data } = useQuery(GET_TRANSACTION, {
         variables: { id: id },
     });
-
-    console.log("Transaction", data);
 
     const [updateTransaction, { loading: loadingUpdate }] = useMutation(
         UPDATE_TRANSACTION,
@@ -47,6 +46,7 @@ const TransactionPage = () => {
                 },
             });
             toast.success("Transaction updated successfully");
+            navigate("/");
         } catch (error) {
             toast.error(error.message);
         }

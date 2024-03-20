@@ -13,7 +13,7 @@ const TransactionForm = () => {
 
         const form = e.target;
         const formData = new FormData(form);
-        console.log({ formData });
+        
         const transactionData = {
             description: formData.get("description"),
             paymentType: formData.get("paymentType"),
