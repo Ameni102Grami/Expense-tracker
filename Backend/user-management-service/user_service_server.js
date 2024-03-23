@@ -2,12 +2,13 @@ import grpc from "@grpc/grpc-js";
 import protoLoader from "@grpc/proto-loader";
 import path from "path";
 import { fileURLToPath } from "url";
-import { user_delete, user_update, all_users } from "./controllers/user.js";
 import { connectDB } from "./db/connectDb.js";
 import User from "./models/user.model.js";
+import dotenv from "dotenv";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+dotenv.config();
 const protoPath = path.resolve(__dirname, "user_service.proto");
 const packageDefinition = protoLoader.loadSync(protoPath, {
     keepCase: true,
