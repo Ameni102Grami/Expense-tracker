@@ -1,0 +1,38 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  graphql:
+    host: localhost
+    paths: "/graphql"
+  grpc:
+    host: localhost
+    paths: "/grpc"
+serviceEndpoints:
+  graphqlService:
+    url: "http://localhost:4000/graphql" # Assuming your GraphQL server is running on port 3000
+  grpcService:
+    url: "grpc://localhost:50051" # Assuming your gRPC server is running on port 50051
+policies:
+  - cors
+  - proxy
+pipelines:
+  graphqlPipeline:
+    apiEndpoints:
+      - graphql
+    policies:
+      - cors:
+      - proxy:
+          - action:
+              serviceEndpoint: graphqlService
+              changeOrigin: true
+  grpcPipeline:
+    apiEndpoints:
+      - grpc
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: grpcService
+              changeOrigin: true
