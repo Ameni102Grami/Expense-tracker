@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import protoLoader from "@grpc/proto-loader";
 import path from "path";
 import dotenv from "dotenv";
-import { connectDB } from "./db/connectDb.js";
+import { connectDB } from "../db/connectDb.js";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 const protoPath = path.resolve(
     __dirname,
-    "./user-management-service/user_service.proto",
+    "user_service.proto",
 );
 const packageDefinition = protoLoader.loadSync(protoPath, {
     keepCase: true,
@@ -32,7 +32,7 @@ const client = new userServiceProto.UserService(
     credentials.createInsecure(),
 );
 
-app.delete("/api/users/:userId", (req, res) => {
+app.delete("/users/:userId", (req, res) => {
     const userId = req.params.userId;
     client.deleteUser({ userId: userId }, (error, response) => {
         if (error) {
@@ -44,7 +44,7 @@ app.delete("/api/users/:userId", (req, res) => {
     });
 });
 
-app.put("/api/users/:userId", (req, res) => {
+app.put("/users/:userId", (req, res) => {
     const userId = req.params.userId;
     const newName = req.body.name;
     client.updateUser({ userId: userId, name: newName }, (error, response) => {
@@ -57,7 +57,7 @@ app.put("/api/users/:userId", (req, res) => {
     });
 });
 
-app.get("/api/users", (req, res) => {
+app.get("/users", (req, res) => {
     client.allUsers({}, (error, response) => {
         if (error) {
             console.error(error);
