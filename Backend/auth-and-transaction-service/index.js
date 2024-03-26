@@ -8,7 +8,6 @@ import connectMongo from "connect-mongodb-session";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { buildContext } from "graphql-passport";
-
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
 import dotenv from "dotenv";
@@ -27,6 +26,7 @@ const store = new MongoDBStore({
 });
 
 store.on("error", (error) => console.log(error));
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -46,12 +46,16 @@ app.use(passport.session());
 const server = new ApolloServer({
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
+
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 await server.start();
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
-// Ensure express.json() is placed before the Apollo Server middleware
 app.use(
   "/graphql",
   cors({
