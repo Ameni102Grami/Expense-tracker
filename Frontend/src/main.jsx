@@ -3,16 +3,11 @@ import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import GridBackground from "./components/ui/GridBackground.jsx";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./index.css";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://localhost:8080/graphql",
   cache: new InMemoryCache(),
   credentials: "include",
 });

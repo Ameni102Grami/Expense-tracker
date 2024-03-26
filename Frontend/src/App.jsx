@@ -10,9 +10,9 @@ import { useQuery } from "@apollo/client";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const authUser = true;
+
   const { loading, data, error } = useQuery(GET_AUTHENTICATED_USER);
-  console.log({ data });
+  
   if (loading) return null;
   return (
     <>
