@@ -32,13 +32,18 @@ const UsersPage = () => {
     updateData(`http://localhost:8080/users/${user._id}`, {
       profilePicture: user.profilePicture,
       ...editingUserInfo,
-    }).then((response) => toast.success("user updated successfully"));
-    setEditingUserInfo({
-      username: "",
-      name: "",
-      gender: "",
+    }).then((response) => {
+      toast.success("user updated successfully");
+      setEditingUserInfo({
+        username: "",
+        name: "",
+        gender: "",
+      });
+      setEditingUser(null);
+      fetchData("http://localhost:8080/users").then((response) =>
+        setUsers(response)
+      );
     });
-    setEditingUser(null);
   };
   const handleChange = (event, id) => {
     const { name, value } = event.target;
