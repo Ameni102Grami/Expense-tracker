@@ -8,11 +8,11 @@ import Header from "./components/ui/Header";
 import { GET_AUTHENTICATED_USER } from "./graphql/queries/user.query";
 import { useQuery } from "@apollo/client";
 import { Toaster } from "react-hot-toast";
+import UsersPage from "./pages/UsersPage";
 
 function App() {
+  const { loading, data } = useQuery(GET_AUTHENTICATED_USER);
 
-  const { loading, data, error } = useQuery(GET_AUTHENTICATED_USER);
-  
   if (loading) return null;
   return (
     <>
@@ -35,6 +35,10 @@ function App() {
           element={
             data?.authUser ? <TransactionPage /> : <Navigate to="/login" />
           }
+        />
+        <Route
+          path="/users"
+          element={data?.authUser ? <UsersPage /> : <Navigate to="/login" />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -9,6 +9,8 @@ message User {
     string password = 4;
     string profilePicture = 5;
     string gender = 6;
+    string updatedAt=7;
+    string createdAt=8;
 }
 
 message DeleteUserRequest {
@@ -21,7 +23,11 @@ message DeleteUserResponse {
 
 message UpdateUserRequest {
     string userId = 1;
-    string name = 2;
+    string username = 2;
+    string name = 3;
+   
+    string profilePicture = 4;
+    string gender = 5;
 }
 message Empty {}
 message UpdateUserResponse {
