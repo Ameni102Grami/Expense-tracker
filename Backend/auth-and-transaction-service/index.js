@@ -37,7 +37,7 @@ app.use(
       httpOnly: true,
     },
     store,
-  }),
+  })
 );
 
 app.use(passport.initialize());
@@ -65,7 +65,7 @@ app.use(
   express.json(),
   expressMiddleware(server, {
     context: async ({ req, res }) => buildContext({ req, res }),
-  }),
+  })
 );
 
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
