@@ -18,7 +18,6 @@ export const GET_USER_AND_TRANSACTIONS = gql`
 			name
 			username
 			profilePicture
-			# relationships
 			transactions {
 				_id
 				description

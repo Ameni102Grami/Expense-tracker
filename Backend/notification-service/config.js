@@ -30,7 +30,6 @@ class KafkaConfig {
       await this.consumer.subscribe({ topic, fromBeginning: true });
       await this.consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-          console.log("hollaaaaaayyy", { topic });
           const value = message.value.toString();
           callback(value);
         },

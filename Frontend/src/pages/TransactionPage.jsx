@@ -86,7 +86,7 @@ const TransactionPage = () => {
                 className="w-full max-w-lg flex flex-col gap-5 px-3 "
                 onSubmit={handleSubmit}
             >
-                {/* TRANSACTION */}
+           
                 <div className="flex flex-wrap">
                     <div className="w-full">
                         <label
