@@ -12,13 +12,11 @@ app.post("/send", controllers.sendMessageToKafka);
 
 const kafkaConfig = new KafkaConfig();
 
-// New GET route to consume messages from Kafka
 app.get("/notifications", (req, res) => {
- kafkaConfig.consume("my-topic", (value) => {
-    // Process the message here, for example, by sending it as a response
+  kafkaConfig.consume("my-topic", (value) => {
     console.log("📨 Receive message: ", value);
-    res.json({ message: value });
- });
+    res.status(200).json({ message: value });
+  });
 });
 
 app.listen(9096, () => {
