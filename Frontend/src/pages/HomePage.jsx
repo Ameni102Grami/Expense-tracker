@@ -101,7 +101,7 @@ const HomePage = () => {
     }
   };
   const navigate = useNavigate();
-  console.log({ message });
+
   return (
     <>
       <div className="flex flex-col gap-6 items-center max-w-7xl mx-auto z-20 relative justify-center">

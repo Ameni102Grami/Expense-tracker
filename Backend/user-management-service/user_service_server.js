@@ -36,10 +36,7 @@ function deleteUser(call, callback) {
 
 function updateUser(call, callback) {
   const userId = call.request.userId;
-  console.log(
-    "aaaaaaaaaaaaaasaadadadadadaafafafafafafafafafafafaf",
-    call.request
-  );
+
   const body = call.request;
   User.findByIdAndUpdate(userId, { userId, ...body })
     .then((updatedUser) => {

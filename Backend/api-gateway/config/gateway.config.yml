@@ -30,15 +30,15 @@ admin:
 apiEndpoints:
   graphql:
     host: localhost
-    paths: "/graphql"
+    paths: ["/graphql"]
     methods: "*"
   grpc:
     host: localhost
-    paths: ["/users", "/users/:id", "/users/*"]
+    paths: ["/users", "/users/:id", "/users/*", "/api-docs"]
     methods: "*"
   kafka:
     host: localhost
-    paths: ["/send", "/notifications"]
+    paths: ["/send", "/notifications", "/api-docs"]
     methods: "*"
 serviceEndpoints:
   graphqlService:

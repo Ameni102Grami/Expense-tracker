@@ -48,7 +48,6 @@ const transactionResolver = {
         const response = await axios.post("http://localhost:8080/send", {
           message: { categoryData, user: context.getUser() },
         });
-        console.log("API response:", response.data);
       } catch (error) {
         throw new Error("Failed to send data to API");
       }
