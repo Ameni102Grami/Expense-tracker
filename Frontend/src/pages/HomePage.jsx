@@ -1,5 +1,7 @@
 import { Doughnut } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import {
   Popover,
   PopoverHandler,
@@ -30,7 +32,6 @@ const HomePage = () => {
     fetchData(`http://localhost:8080/notifications`).then((response) => {
       setMessage(response?.message);
     });
-    // toast.success(message);
   }, [message]);
 
   const [logout, { loading, client }] = useMutation(LOGOUT, {

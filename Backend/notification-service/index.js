@@ -3,6 +3,7 @@ import controllers from "./controllers.js";
 import KafkaConfig from "./config.js";
 import { connectDB } from "./db/connectDb.js";
 import dotenv from "dotenv";
+import { createClient } from "redis";
 
 const app = express();
 dotenv.config();
@@ -11,14 +12,20 @@ app.use(express.json());
 app.post("/send", controllers.sendMessageToKafka);
 
 const kafkaConfig = new KafkaConfig();
+const client = await createClient()
+  .on("error", (err) => console.log("Redis Client Error", err))
+  .connect();
 
-app.get("/notifications", (req, res) => {
-  kafkaConfig.consume("my-topic", (value) => {
-    console.log("📨 Receive message: ", value);
-    res.status(200).json({ message: value });
-  });
+await client.set("key", "value");
+const value = await client.get("value");
+
+kafkaConfig.consume("my-topic", async (value) => {
+  await client.set("value", value);
 });
 
+app.get("/notifications", async (req, res) => {
+  res.json({ message: value });
+});
 app.listen(9096, () => {
   console.log(`Server is running on port 9096.`);
 });

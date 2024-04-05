@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "node /Users/amenigrami/Desktop/nodejs+graphql/Expense-Project/Backend/user-management-service/user_service_server.js & nodemon index.js"
   },
   "keywords": [],
   "author": "",

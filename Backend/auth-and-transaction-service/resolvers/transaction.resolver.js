@@ -50,7 +50,6 @@ const transactionResolver = {
         });
         console.log("API response:", response.data);
       } catch (error) {
-        console.error("Error sending data to API:", error);
         throw new Error("Failed to send data to API");
       }
       return categoryData;
