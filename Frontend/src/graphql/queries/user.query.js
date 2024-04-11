@@ -8,6 +8,7 @@ export const GET_AUTHENTICATED_USER = gql`
       name
       profilePicture
       role
+      budget
     }
   }
 `;

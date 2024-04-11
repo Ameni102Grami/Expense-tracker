@@ -1,7 +1,5 @@
 import { Doughnut } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import {
   Popover,
   PopoverHandler,
@@ -78,7 +76,6 @@ const HomePage = () => {
         }
       });
       fetchData(`http://localhost:8080/notifications`).then((response) => {
-        console.log(response?.message);
         setMessage(response?.message);
       });
 
@@ -122,6 +119,12 @@ const HomePage = () => {
               Users
             </button>
           )}
+          <button
+            onClick={() => navigate("/users")}
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4"
+          >
+            Your Budget :{authUserData?.authUser?.budget}
+          </button>
           <Popover>
             <Badge content={message !== "" ? "!" : ""}>
               {" "}
