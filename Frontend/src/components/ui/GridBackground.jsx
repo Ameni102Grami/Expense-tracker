@@ -1,16 +1,6 @@
-import money from "../../assets/money.jpg";
+import money from "../../assets/money.png";
 
 const GridBackground = ({ children }) => {
-  return (
-    <div
-      style={{
-        backgroundImage: `url(${money})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 };
 export default GridBackground;
