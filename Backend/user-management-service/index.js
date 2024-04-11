@@ -52,10 +52,8 @@ const swaggerOptions = {
   },
   apis: ["./index.js"],
 };
-// Initialize swagger-jsdoc
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
-// Use swagger-ui-express for serving the Swagger UI
 app.use("/user-api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
@@ -137,7 +135,6 @@ app.use(express.json());
  */
 app.put("/users/:userId", (req, res) => {
   const userId = req.params.userId;
-
   client.updateUser({ userId, ...req.body }, (error, response) => {
     if (error) {
       console.error(error);
@@ -199,5 +196,5 @@ app.get("/users", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`API Gateway listening at http://localhost:${port}`);
+  console.log(`User Server listening at http://localhost:${port}`);
 });

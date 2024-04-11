@@ -34,6 +34,7 @@ const HomePage = () => {
     });
   }, [message]);
 
+  console.log({ authUserData });
   const [logout, { loading, client }] = useMutation(LOGOUT, {
     refetchQueries: ["GetAuthenticatedUser"],
   });
@@ -113,12 +114,14 @@ const HomePage = () => {
           <p className="md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-pink-600 via-indigo-500 to-pink-400 inline-block text-transparent bg-clip-text">
             Spend wisely, track wisely
           </p>
-          <button
-            onClick={() => navigate("/users")}
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4"
-          >
-            Users
-          </button>
+          {authUserData?.authUser?.role === "ADMIN" && (
+            <button
+              onClick={() => navigate("/users")}
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4"
+            >
+              Users
+            </button>
+          )}
           <Popover>
             <Badge content={message !== "" ? "!" : ""}>
               {" "}
