@@ -76,6 +76,10 @@ const HomePage = () => {
           borderColors.push("rgba(54, 162, 235)");
         }
       });
+      fetchData(`http://localhost:8080/notifications`).then((response) => {
+        console.log(response?.message);
+        setMessage(response?.message);
+      });
 
       setChartData((prev) => ({
         labels: categories,

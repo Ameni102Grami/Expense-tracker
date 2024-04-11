@@ -8,6 +8,7 @@ import {
 import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 import TransactionFormSkeleton from "../components/skeletons/sectionFormSkeleton";
+import { fetchData } from "../utils/axios";
 
 const TransactionPage = () => {
   const { id } = useParams();
@@ -45,6 +46,7 @@ const TransactionPage = () => {
           },
         },
       });
+      window.location.reload();
       toast.success("Transaction updated successfully");
       navigate("/");
     } catch (error) {

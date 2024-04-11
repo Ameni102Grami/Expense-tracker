@@ -13,7 +13,7 @@ const sendMessageToKafka = async (req, res) => {
       }
     });
     const kafkaConfig = new KafkaConfig();
-
+   
     const messages = [
       {
         key: "key1",

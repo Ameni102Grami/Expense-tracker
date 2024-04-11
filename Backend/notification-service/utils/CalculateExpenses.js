@@ -1,6 +1,9 @@
 export function calculateExpenseNotification(budget, totalExpenses) {
-  const expensePercentage = totalExpenses / (budget * 100); // Multiply by 100 to get the percentage
-
+  const expensePercentage = (totalExpenses / budget) * 100; // Calculate the percentage correctly
+ 
+  if (expensePercentage === 0) {
+    return "Your budget is set to 0. Please set a budget to track your expenses.";
+  }
   if (expensePercentage >= 100) {
     return "Your expenses have exceeded your budget. Take immediate steps to control your spending.";
   } else if (expensePercentage >= 90) {

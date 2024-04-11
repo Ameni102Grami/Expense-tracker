@@ -56,7 +56,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 // Use swagger-ui-express for serving the Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/user-api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 /**

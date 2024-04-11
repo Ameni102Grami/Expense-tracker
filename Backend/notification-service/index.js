@@ -34,7 +34,11 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 // Use swagger-ui-express for serving the Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use(
+  "/notification-api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocs)
+);
 
 /**
  * @swagger
@@ -61,14 +65,13 @@ const client = await createClient()
   .on("error", (err) => console.log("Redis Client Error", err))
   .connect();
 
-await client.set("key", "value");
-const value = await client.get("value");
-
 kafkaConfig.consume("my-topic", async (value) => {
   await client.set("value", value);
 });
+await client.set("key", "value");
 
 app.get("/notifications", async (req, res) => {
+  const value = await client.get("value");
   res.json({ message: value });
 });
 
