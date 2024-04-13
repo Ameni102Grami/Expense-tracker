@@ -32,7 +32,6 @@ const HomePage = () => {
     });
   }, [message]);
 
-  console.log({ authUserData });
   const [logout, { loading, client }] = useMutation(LOGOUT, {
     refetchQueries: ["GetAuthenticatedUser"],
   });
