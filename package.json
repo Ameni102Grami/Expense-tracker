@@ -1,0 +1,19 @@
+{
+  "name": "expense-project",
+  "version": "1.0.0",
+  "description": "## Overview Welcome to the Expense Tracker Project! This application is designed to simplify personal finance management by tracking expenses, providing detailed insights into spending patterns, and offering a platform for users to manage their expenses and categories efficiently.",
+  "main": "index.js",
+  "scripts": {
+    "start:auth-and-transaction": "cd backend/auth-and-transaction-service && npm run dev",
+    "start:notification": "cd backend/notification-service && npm run dev",
+    "start:user-management": "cd backend/user-management-service && npm run dev",
+    "start:api-gateway": "cd backend/api-gateway && npm start",
+    "start:front": " cd frontend && npm run dev",
+    "start:all": "concurrently \"npm:start:auth-and-transaction\" \"npm:start:notification\" \"npm:start:user-management\"  \"npm:start:api-gateway\" \"npm:start:front\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
