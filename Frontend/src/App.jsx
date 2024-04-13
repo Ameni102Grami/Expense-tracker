@@ -38,7 +38,13 @@ function App() {
         />
         <Route
           path="/users"
-          element={data?.authUser ? <UsersPage /> : <Navigate to="/login" />}
+          element={
+            data?.authUser && data?.authUser.role === "ADMIN" ? (
+              <UsersPage />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
