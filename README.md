@@ -26,7 +26,7 @@ and you should also install redis .
 
    
 For Users Documentation click on this link :
-[ http://localhost:8000/notification-api-docs](http://localhost:9096/notification-api-docs)
+[ http://localhost:9096/notification-api-docs](http://localhost:9096/notification-api-docs)
 
 For notification Documentation click on this link :
 [ http://localhost:8000/user-api-docs](http://localhost:8000/user-api-docs)
