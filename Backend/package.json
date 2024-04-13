@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start:auth-and-transaction": "cd auth-and-transaction-service && npm run dev",
+    "start:notification": "cd notification-service && npm run dev",
+    "start:user-management": "cd user-management-service && npm run dev",
+    "start:api-gateway": "cd api-gateway && npm start",
+    "start:all": "concurrently \"npm:start:auth-and-transaction\" \"npm:start:notification\" \"npm:start:user-management\"  \"npm:start:api-gateway\""
   },
   "keywords": [],
   "author": "",
