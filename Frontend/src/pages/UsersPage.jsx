@@ -62,6 +62,7 @@ const UsersPage = () => {
       setUsers(response)
     );
     setEditingUser(null);
+    window.location.reload();
   };
   const navigate = useNavigate();
   return (
