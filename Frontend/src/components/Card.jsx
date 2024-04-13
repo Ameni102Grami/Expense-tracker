@@ -36,8 +36,8 @@ const Card = ({ transaction, authUser }) => {
       await deleteTransaction({
         variables: { transactionId: transaction._id },
       });
-      window.location.reload();
       toast.success("Transaction deleted successfully");
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting transaction:", error);
       toast.error(error.message);
