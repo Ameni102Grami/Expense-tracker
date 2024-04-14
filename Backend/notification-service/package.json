@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "redis-server && node index.js",
-    "dev": "redis-server && nodemon index.js "
+    "start": "nodemon index.js && redis-server",
+    "dev": " nodemon index.js && redis-server"
   },
   "keywords": [],
   "author": "",
