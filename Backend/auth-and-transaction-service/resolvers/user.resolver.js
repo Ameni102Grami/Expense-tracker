@@ -1,4 +1,5 @@
 import Transaction from "../models/transaction.model.js";
+import axios from "axios";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
@@ -49,8 +50,8 @@ const userResolver = {
           username,
           password,
         });
-
         await context.login(user);
+
         return user;
       } catch (err) {
         console.error("Error in login:", err);
@@ -75,7 +76,11 @@ const userResolver = {
   Query: {
     authUser: async (_, __, context) => {
       try {
+        await axios.post("http://localhost:8080/users/auth", {
+          user: context.getUser(),
+        });
         const user = await context.getUser();
+
         return user;
       } catch (err) {
         console.error("Error in authUser: ", err);
@@ -85,6 +90,7 @@ const userResolver = {
     user: async (_, { userId }) => {
       try {
         const user = await User.findById(userId);
+
         return user;
       } catch (err) {
         console.error("Error in user query:", err);

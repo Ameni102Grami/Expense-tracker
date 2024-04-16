@@ -27,7 +27,9 @@ const transactionResolver = {
     },
     categoryStatistics: async (_, __, context) => {
       if (!context.getUser()) throw new Error("Unauthorized");
-
+      await axios.post("http://localhost:8080/users/auth", {
+        user: context.getUser(),
+      });
       const userId = context.getUser()._id;
       const transactions = await Transaction.find({ userId });
       const categoryMap = {};
@@ -47,6 +49,9 @@ const transactionResolver = {
       try {
         const response = await axios.post("http://localhost:8080/send", {
           message: { categoryData, user: context.getUser() },
+        });
+        await axios.post("http://localhost:8080/users/auth", {
+          user: context.getUser(),
         });
       } catch (error) {
         throw new Error("Failed to send data to API");

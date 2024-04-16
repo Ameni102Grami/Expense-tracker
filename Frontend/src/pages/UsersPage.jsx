@@ -3,6 +3,8 @@ import toast from "react-hot-toast";
 import { deleteData, fetchData, updateData } from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 import UserRow from "./UserRow";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
+import { useQuery } from "@apollo/client";
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -12,9 +14,10 @@ const UsersPage = () => {
     name: "",
     gender: "",
   });
+  const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
 
   useEffect(() => {
-    fetchData("http://localhost:8080/users").then((response) =>
+    fetchData(`http://localhost:8080/users`).then((response) =>
       setUsers(response)
     );
   }, [editingUser]);

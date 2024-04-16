@@ -13,7 +13,7 @@ const sendMessageToKafka = async (req, res) => {
       }
     });
     const kafkaConfig = new KafkaConfig();
-   
+
     const messages = [
       {
         key: "key1",
@@ -23,7 +23,7 @@ const sendMessageToKafka = async (req, res) => {
         ),
       },
     ];
-
+  
     kafkaConfig.produce("my-topic", messages);
 
     res.status(200).json({

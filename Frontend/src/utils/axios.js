@@ -12,7 +12,6 @@ export async function fetchData(url) {
 
 // Function to update data at a given URL
 export async function updateData(url, data) {
-
   try {
     const response = await axios.put(url, data);
     return response.data;

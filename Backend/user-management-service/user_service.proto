@@ -45,4 +45,5 @@ service UserService {
     rpc deleteUser (DeleteUserRequest) returns (DeleteUserResponse) {}
     rpc updateUser (UpdateUserRequest) returns (UpdateUserResponse) {}
     rpc allUsers (Empty)  returns (AllUsersResponse) {}
+  
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { credentials, loadPackageDefinition, status } from "@grpc/grpc-js";
+import { credentials, loadPackageDefinition } from "@grpc/grpc-js";
 import { fileURLToPath } from "url";
 import protoLoader from "@grpc/proto-loader";
 import swaggerUi from "swagger-ui-express";
@@ -7,7 +7,10 @@ import swaggerJsdoc from "swagger-jsdoc";
 import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
+import connectMongo from "connect-mongodb-session";
+import { createClient } from "redis";
 import { connectDB } from "./db/connectDb.js";
+import session from "express-session";
 
 dotenv.config();
 
@@ -24,6 +27,7 @@ const packageDefinition = protoLoader.loadSync(protoPath, {
   defaults: true,
   oneofs: true,
 });
+
 const userServiceProto = loadPackageDefinition(packageDefinition).user;
 
 connectDB();
@@ -36,6 +40,27 @@ const corsOptions = {
   methods: ["POST", "GET", "PATCH", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
+const MongoDBStore = connectMongo(session);
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  collection: "sessions",
+});
+
+store.on("error", (error) => console.log(error));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true,
+    },
+    store,
+  })
+);
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -54,9 +79,20 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+const redisClient = await createClient()
+  .on("error", (err) => console.log("Redis Client Error", err))
+  .connect();
+app.post("/users/auth", async (req, res) => {
+  console.log("stupid", req.body.user);
+  await redisClient.set("user", JSON.stringify(req.body.user));
+  res.send("Authenticated");
+});
+const user = JSON.parse(await redisClient.get("user"));
+
 app.use("/user-api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true }));
 /**
  * @swagger
  * /users/{userId}:
@@ -76,16 +112,18 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.delete("/users/:userId", (req, res) => {
   const userId = req.params.userId;
-  client.deleteUser({ userId: userId }, (error, response) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send("Error deleting user");
-    } else {
-      res.send(response.message);
-    }
-  });
+  if (user._id) {
+    client.deleteUser({ userId: userId }, (error, response) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send("Error deleting user");
+      } else {
+        return res.send(response.message);
+      }
+    });
+  } else return res.status(401).send("UnAuthorized");
 });
-app.use(express.json());
+
 /**
  * @swagger
  * /users/{userId}:
@@ -135,15 +173,18 @@ app.use(express.json());
  */
 app.put("/users/:userId", (req, res) => {
   const userId = req.params.userId;
-  client.updateUser({ userId, ...req.body }, (error, response) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send("Error updating user");
-    } else {
-      res.send(response.message);
-    }
-  });
+  if (user._id) {
+    client.updateUser({ userId, ...req.body }, (error, response) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send("Error updating user");
+      } else {
+        return res.send(response.message);
+      }
+    });
+  } else return res.status(401).send("UnAuthorized");
 });
+
 /**
  * @swagger
  * /users:
@@ -184,15 +225,18 @@ app.put("/users/:userId", (req, res) => {
  *                     type: string
  *                     description: The date and time the user was created.
  */
-app.get("/users", (req, res) => {
-  client.allUsers({}, (error, response) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send("Error fetching users");
-    } else {
-      res.send(response.users);
-    }
-  });
+app.get("/users", async (req, res) => {
+  console.log("whyyyyy", user._id);
+  if (user._id) {
+    client.allUsers({}, (error, response) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send("Error fetching users");
+      } else {
+        return res.send(response.users);
+      }
+    });
+  } else return res.status(401).send("UnAuthorized");
 });
 
 app.listen(port, () => {

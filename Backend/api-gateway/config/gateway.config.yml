@@ -11,7 +11,7 @@ apiEndpoints:
     methods: "*"
   grpc:
     host: localhost
-    paths: ["/user-api-docs", "/users", "/users/:id", "/users/*"]
+    paths: ["/user-api-docs", "/users", "/users/:id", "/users/*", "/users/auth"]
     methods: "*"
   kafka:
     host: localhost

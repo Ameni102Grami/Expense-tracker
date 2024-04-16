@@ -63,11 +63,13 @@ function getAllUsers(call, callback) {
     });
 }
 
+
 const server = new grpc.Server();
 server.addService(userServiceProto.UserService.service, {
   deleteUser: deleteUser,
   updateUser: updateUser,
   allUsers: getAllUsers,
+ 
 });
 
 const port = 50051;
