@@ -119,10 +119,7 @@ const HomePage = () => {
               Users
             </button>
           )}
-          <button
-            onClick={() => navigate("/users")}
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4"
-          >
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-4">
             Your Budget :{authUserData?.authUser?.budget}
           </button>
           <Popover>
