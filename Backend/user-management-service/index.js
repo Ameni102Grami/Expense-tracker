@@ -85,7 +85,6 @@ const redisClient = await createClient()
   .on("error", (err) => console.log("Redis Client Error", err))
   .connect();
 app.post("/users/auth", async (req, res) => {
-  console.log("stupid", req.body.user);
   await redisClient.set("user", JSON.stringify(req.body.user));
   res.send("Authenticated");
 });
