@@ -226,7 +226,6 @@ app.put("/users/:userId", (req, res) => {
  *                     description: The date and time the user was created.
  */
 app.get("/users", async (req, res) => {
-  console.log("whyyyyy", user._id);
   if (user._id) {
     client.allUsers({}, (error, response) => {
       if (error) {
