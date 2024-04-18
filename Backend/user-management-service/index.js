@@ -111,7 +111,7 @@ app.use(cors(corsOptions));
  */
 app.delete("/users/:userId", (req, res) => {
   const userId = req.params.userId;
-  if (user._id) {
+  if (user._id && user?.role === "ADMIN") {
     client.deleteUser({ userId: userId }, (error, response) => {
       if (error) {
         console.error(error);
@@ -172,7 +172,7 @@ app.delete("/users/:userId", (req, res) => {
  */
 app.put("/users/:userId", (req, res) => {
   const userId = req.params.userId;
-  if (user._id) {
+  if (user._id && user?.role === "ADMIN") {
     client.updateUser({ userId, ...req.body }, (error, response) => {
       if (error) {
         console.error(error);
@@ -225,7 +225,7 @@ app.put("/users/:userId", (req, res) => {
  *                     description: The date and time the user was created.
  */
 app.get("/users", async (req, res) => {
-  if (user._id) {
+  if (user._id && user?.role === "ADMIN") {
     client.allUsers({}, (error, response) => {
       if (error) {
         console.error(error);

@@ -2,7 +2,11 @@ import Transaction from "../models/transaction.model.js";
 import axios from "axios";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import { createClient } from "redis";
 
+const client = await createClient()
+  .on("error", (err) => console.log("Redis Client Error", err))
+  .connect();
 const userResolver = {
   Mutation: {
     signUp: async (_, { input }, context) => {
@@ -64,6 +68,10 @@ const userResolver = {
         context.req.session.destroy((err) => {
           if (err) throw err;
         });
+        client.sendCommand(["FLUSHALL"], function (err, succeeded) {
+          console.log({succeeded}); // true if successful
+        });
+
         context.res.clearCookie("connect.sid");
 
         return { message: "Logged out successfully" };
